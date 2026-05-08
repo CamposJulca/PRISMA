@@ -1,0 +1,156 @@
+# ============================================================================
+# PRISMA-GTI — catalogo_servicios.yaml
+# ----------------------------------------------------------------------------
+# Versión:           1.0
+# Fecha generación:  2026-05-08
+# Origen:            ProyectoFinal3.ipynb bloques 127 (indicadores) y 179
+#                    (ASMS); Indicadores2026.ipynb bloque 10 (idéntico al
+#                    bloque 179). Total: 90 reglas tras consolidación.
+# Validación:        Fabián (catálogo de servicios funcional)
+# ----------------------------------------------------------------------------
+# Saneamientos aplicados al extraer del notebook legacy:
+#   - 'BUZÓN SEGURO' aparecía dos veces en bloque 127 con destinos
+#     contradictorios ('Buzón Seguro' y 'Acceso Buzón Seguro'). Se
+#     conserva solo la primera; la segunda se cancelaba más adelante
+#     vía bloque 179.
+#   - 'PAGINA WEB' aparecía dos veces (ambas → 'Página Web'): consolidada.
+#   - 'E-FUICC' aparecía dos veces (ambas → 'e-FUICC'): consolidada.
+#   - 'DESARROLLO' del bloque 127 escribía a la columna 'proyecto' (no
+#     'servicio'); se separó en proyecto_overrides.
+#   - Bloques 179 (PF3) y 10 (Ind2026) son idénticos: las 15 reglas
+#     viven una sola vez en asms_overrides; el transformer las aplica
+#     a los dos DataFrames que las requieren.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# indicadores_overrides — aplica al DataFrame consolidado 'indicadores'
+# (Discovery + Aranda + GLPI + GEUS + ASMS) en el pipeline histórico.
+# Origen: ProyectoFinal3.ipynb bloque 127.
+# Total: 74 reglas.
+# ----------------------------------------------------------------------------
+indicadores_overrides:
+  # Buzón Seguro
+  - { from: "APLICATIVO BUZON SEGURO", to: "Buzón Seguro" }
+  - { from: "BUZÓN SEGURO",            to: "Buzón Seguro" }
+  # Office 365 / Correo
+  - { from: "APLICATIVOS MICROSOFT OFFICE (EXCEL - ACCESS - PPT - WORD)", to: "Office 365 y Correo Electrónico" }
+  - { from: "CONVERTIR PDF A OFFICE",  to: "Office 365 y Correo Electrónico" }
+  - { from: "CORREO ELECTRONICO",      to: "Office 365 y Correo Electrónico" }
+  # Aplicativos administrativos
+  - { from: "APLICATIVO SARLAFT",      to: "SARLAFT" }
+  - { from: "APLICATIVO KACTUS",       to: "Kactus" }
+  - { from: "APLICATIVO BODEGA DE DATOS", to: "Bodega de Datos" }
+  - { from: "APLICATIVO ALFCOM",       to: "ALFYN" }
+  - { from: "APLICATIVO INFOAGRO",     to: "InfoAgro" }
+  - { from: "APLICATIVO ISA",          to: "ISA" }
+  - { from: "APLICATIVO LIBRE INVERSION", to: "Libre Inversión" }
+  - { from: "APLICATIVO BMC",          to: "BMC" }
+  - { from: "APLICATIVO GESTION COMERCIAL", to: "Gestión Comercial" }
+  - { from: "APLICATIVO ISODOC",       to: "ISODOC" }
+  - { from: "APLICATIVO E-FUICC",      to: "e-FUICC" }
+  - { from: "E-FUICC",                 to: "e-FUICC" }
+  - { from: "APLICATIVO SPF",          to: "SPF" }
+  - { from: "APLICATIVO SIPA",         to: "SIPA" }
+  - { from: "APLICATIVO DEL ICR",      to: "ICR" }
+  - { from: "APLICATIVO GOANYWHERE",   to: "GoanyWhere" }
+  - { from: "APLICATIVO CIF",          to: "CIF" }
+  - { from: "APLICATIVO E-LEARNING",   to: "E-LEARNING Moodle" }
+  - { from: "APLICATIVO GESTION DOCUMENTAL", to: "Gestión Documental" }
+  - { from: "APLICATIVO MESA DE SERVICIOS", to: "Discovery" }
+  - { from: "APLICATIVO APOTEOSYS",    to: "Apoteosys" }
+  - { from: "Apoteoys",                to: "Apoteosys" }
+  # FAG SERVICIOS
+  - { from: "APLICATIVO FAG (SERVICIOS)", to: "FAG SERVICIOS" }
+  - { from: "FAG",                     to: "FAG SERVICIOS" }
+  - { from: "Mantenimiento FAG",       to: "FAG SERVICIOS" }
+  - { from: "APLICATIVO CARTERAS SFI", to: "FAG SERVICIOS" }
+  # e-FAG
+  - { from: "APLICATIVO EFAG",         to: "e-FAG" }
+  - { from: "EFAG",                    to: "e-FAG" }
+  # Mercurio
+  - { from: "MERCURIO",                to: "Mercurio" }
+  - { from: "APLICATIVO MERCURIO",     to: "Mercurio" }
+  # Página Web
+  - { from: "PAGINA WEB",              to: "Página Web" }
+  - { from: "PAGINA WEB (WWW.FINAGRO.COM.CO)", to: "Página Web" }
+  - { from: "Página web www.finagro.com.co",   to: "Página Web" }
+  # Intranet / SharePoint
+  - { from: "INTRANET",                to: "Intranet SharePoint" }
+  - { from: "Intranet - SharePoint",   to: "Intranet SharePoint" }
+  # Redes e Internet
+  - { from: "INCIDENTES DE RED",       to: "Redes e Internet" }
+  - { from: "ACCESO A INTERNET",       to: "Redes e Internet" }
+  # Planta telefónica
+  - { from: "PLANTA TELEFONICA Y TELEFONOS", to: "Planta Telefónica" }
+  - { from: "GRABADOR DE LLAMADAS",    to: "Planta Telefónica" }
+  # Equipo de cómputo
+  - { from: "HARDWARE (MONITOR - CPU - TECLADO - MOUSE)", to: "Equipo de Cómputo" }
+  - { from: "CONFIGURACION DE EQUIPOS", to: "Equipo de Cómputo" }
+  # Carpetas / accesos
+  - { from: "CARPETAS COMPARTIDAS",    to: "Carpetas Compartidas" }
+  - { from: "OTROS ACCESOS",           to: "Otros Accesos" }
+  - { from: "ACCESO CENTRAL DATA",     to: "Acceso CentralDatos" }
+  # Seguridad de la información
+  - { from: "INCIDENTES DE SEGURIDAD DE LA INFORMACION",            to: "Seguridad de la información" }
+  - { from: "EVENTO SOSPECHOSO DE SEGURIDAD",                       to: "Seguridad de la información" }
+  - { from: "INCIDENTES SEGURIDAD DE LA INFORMACION DATACENTER",    to: "Seguridad de la información" }
+  # Bloqueo / creación de usuarios
+  - { from: "Desbloqueo Usuario o Password", to: "Bloqueo Usuarios y Password" }
+  - { from: "OLVIDO DE CLAVE",         to: "Bloqueo Usuarios y Password" }
+  - { from: "CREACIÓN",                to: "Creación Usuarios" }
+  # AGROS
+  - { from: "APLICATIVO AGROS",        to: "AGROS" }
+  - { from: "Mantenimiento AGROS",     to: "AGROS" }
+  - { from: "APLICATIVO AGROS QA",     to: "AGROS" }
+  # PRAN FONSA
+  - { from: "APLICATIVO PRAN",         to: "PRAN FONSA" }
+  - { from: "Acces Pran",              to: "PRAN FONSA" }
+  - { from: "PRAN Y FONSA",            to: "PRAN FONSA" }
+  # Otros mapeos puntuales
+  - { from: "Feijoa - Reporting Services", to: "Feijoa Reporting Services" }
+  - { from: "BACKUP",                  to: "Backup y Restauraciones" }
+  - { from: "NOVEDADES PERSONAL",      to: "Directorio Activo" }
+  - { from: "MESA DE SOFTWARE",        to: "Aranda" }
+  - { from: "MODIFICACIÓN",            to: "MODIFICACION DE DATOS" }
+  - { from: "Gestión de Activos y Pasivos ALM", to: "Finac ALM" }
+  - { from: "Servicios Web",           to: "Web Services APIs" }
+  - { from: "Web Services - APIs",     to: "Web Services APIs" }
+  - { from: "Sistema de Ingreso Unico de FINAGRO (SSO)", to: "SSO" }
+  - { from: "Actividades TI - General", to: "Actividades TI" }
+  - { from: "SOPORTE APLICACIONES",    to: "Soporte Aplicaciones" }
+  - { from: "SOFTWARE LICENCIADO",     to: "Software Licenciado" }
+  - { from: "SOFTWARE FREE",           to: "Software Free" }
+
+# ----------------------------------------------------------------------------
+# asms_overrides — aplica a los DataFrames provenientes de Aranda ASMS
+# (provisionalASMS.xlsx + tareas1.xlsx).
+# Origen: ProyectoFinal3.ipynb bloque 179 + Indicadores2026.ipynb bloque 10
+#         (los dos bloques son idénticos).
+# Total: 15 reglas.
+# ----------------------------------------------------------------------------
+asms_overrides:
+  - { from: "Agros",                          to: "AGROS" }
+  - { from: "Equipo escritorio",              to: "Equipo de Cómputo" }
+  - { from: "Sebra-Deceval",                  to: "Redes e Internet" }
+  - { from: "Aplicativo SPQR",                to: "SPQR" }
+  - { from: "Seguridad Perimetral Firewall",  to: "Firewall" }
+  - { from: "Acceso Buzón Seguro",            to: "Buzón Seguro" }
+  - { from: "FAG (Servicios)",                to: "FAG SERVICIOS" }
+  - { from: "E-FAG",                          to: "e-FAG" }
+  - { from: "Portátiles",                     to: "Equipo de Cómputo" }
+  - { from: "Sql developer",                  to: "Administración BD y SQL Server" }
+  - { from: "Nuevo sistema de información",   to: "Nuevo Aplicativo" }
+  - { from: "Microsoft Office 365",           to: "Office 365 y Correo Electrónico" }
+  - { from: "Central Datos Carpetas Compartidas", to: "Carpetas Compartidas" }
+  - { from: "Consulta InfoAGRO",              to: "InfoAgro" }
+  - { from: "Feijoa",                         to: "Feijoa Reporting Services" }
+
+# ----------------------------------------------------------------------------
+# proyecto_overrides — reglas que reescriben la columna 'proyecto'
+# (no 'servicio'). Naturaleza distinta a las anteriores: el match es por
+# 'servicio' pero la asignación recae en otra columna.
+# Origen: ProyectoFinal3.ipynb bloque 127 (línea aislada).
+# Total: 1 regla.
+# ----------------------------------------------------------------------------
+proyecto_overrides:
+  - { match_servicio: "DESARROLLO", proyecto: "Mesa de Software" }

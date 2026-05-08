@@ -1,0 +1,31 @@
+# ============================================================================
+# PRISMA-GTI — logging.yaml
+# ----------------------------------------------------------------------------
+# Versión:           1.0
+# Fecha generación:  2026-05-08
+# Origen:            docs/arquitectura.md §4.1 (capa core/logger)
+# Validación:        Equipo técnico (no requiere validación funcional)
+# ============================================================================
+# Configuración del logger basado en loguru. Consumido por
+# src/prisma_gti/core/logger.py::configure_logging.
+#
+# Política de rotación: archivo nuevo cada día, retención 30 días,
+# compresión zip. Cumple el requisito de trazabilidad sin saturar disco.
+# ============================================================================
+
+# Nivel mínimo global. Valores aceptados: DEBUG, INFO, WARNING, ERROR,
+# CRITICAL. Puede sobrescribirse desde la variable de entorno LOG_LEVEL.
+level: INFO
+
+# Formato de cada línea. Los placeholders entre llaves los resuelve loguru.
+# El campo {extra[module]} viene del bind() que hace get_logger().
+format: "{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {extra[module]} | {message}"
+
+# Política de rotación del sink de archivo.
+rotation: "1 day"
+retention: "30 days"
+compression: "zip"
+
+# enqueue=true delega la escritura a un proceso aparte para no bloquear
+# el pipeline principal. Recomendado siempre que se escribe a archivo.
+enqueue: true

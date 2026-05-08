@@ -1,0 +1,228 @@
+# ============================================================================
+# PRISMA-GTI — excepciones_usuarios.yaml
+# ----------------------------------------------------------------------------
+# Versión:           1.0
+# Fecha generación:  2026-05-08
+# Origen:            ProyectoFinal3.ipynb bloques 26, 28, 36, 39, 86, 88,
+#                    89, 95, 110, 115, 136. Total: 129 reglas tras
+#                    consolidación y saneamiento.
+# Validación:        Fabián (overrides funcionales de identidades)
+# ----------------------------------------------------------------------------
+# Saneamientos aplicados al extraer del notebook legacy:
+#
+#   - Bloque 36: las 2 reglas comentadas en el notebook original
+#     ('JBETANCOURT' y 'OALARCON') se excluyeron; el bloque 39 las
+#     trata por una vía distinta (sección nombres_por_username).
+#
+#   - Bloque 88: la regla para "Maryluz Cortes Olarte" del notebook
+#     contenía un bug (asignaba 'Jenny Borbon' como usuariofinal por
+#     copy-paste de la línea anterior). Aquí se corrige a su nombre.
+#
+#   - Conflictos canonicidad bloque 86 vs bloques 95/136: el bloque 86
+#     se aplicaba primero sobre glpi6 y los 95/136 lo sobrescribían
+#     después en el mismo o en otro DataFrame. Se conservan las
+#     versiones de los bloques posteriores (más recientes) y se marcan
+#     con `validacion_pendiente: true` las 4 entradas con conflicto
+#     conocido para que Fabián las revise al final de Fase 3:
+#       * sonia_villareal (vs sespana del bloque 86)
+#       * orlando_bolanos (vs obolanos del bloque 86)
+#       * aromeror        (vs aromero  del bloque 86)
+#       * fjpena          (vs fabian_alean del bloque 89)
+#
+#   - Bloques 110, 115 (geus1) y 136 (indicadores1): redundancias en
+#     casing (mayúsculas vs minúsculas) preservadas como entradas
+#     separadas para mantener paridad con el notebook legacy. El
+#     transformer aplica las reglas tal como matchean.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# por_numero_caso — overrides puntuales de username_ufinal por
+# numero_caso. Aplican al DataFrame Discovery.
+# Origen: bloques 26 (40 reglas) + 28 (15 reglas).
+# Total: 55 reglas.
+# ----------------------------------------------------------------------------
+por_numero_caso:
+  # Bloque 26
+  - { numero_caso: 54706, username_ufinal: "mfeo" }
+  - { numero_caso: 54128, username_ufinal: "nleon" }
+  - { numero_caso: 53156, username_ufinal: "mberrio" }
+  - { numero_caso: 52575, username_ufinal: "mfeo" }
+  - { numero_caso: 51549, username_ufinal: "mfeo" }
+  - { numero_caso: 51544, username_ufinal: "nparra" }
+  - { numero_caso: 51036, username_ufinal: "lmunoz" }
+  - { numero_caso: 49868, username_ufinal: "masmar" }
+  - { numero_caso: 49362, username_ufinal: "mberrio" }
+  - { numero_caso: 48729, username_ufinal: "mtovar" }
+  - { numero_caso: 48494, username_ufinal: "rgutierrez" }
+  - { numero_caso: 46641, username_ufinal: "scastillo" }
+  - { numero_caso: 45126, username_ufinal: "lmunoz" }
+  - { numero_caso: 44500, username_ufinal: "jgomez" }
+  - { numero_caso: 43540, username_ufinal: "lmunoz" }
+  - { numero_caso: 39895, username_ufinal: "mberrio" }
+  - { numero_caso: 39797, username_ufinal: "lmunoz" }
+  - { numero_caso: 37887, username_ufinal: "mtovar" }
+  - { numero_caso: 37640, username_ufinal: "lmunoz" }
+  - { numero_caso: 37482, username_ufinal: "irios" }
+  - { numero_caso: 29435, username_ufinal: "mtovar" }
+  - { numero_caso: 29021, username_ufinal: "scastillo" }
+  - { numero_caso: 19074, username_ufinal: "dpisco" }
+  - { numero_caso: 18913, username_ufinal: "masmar" }
+  - { numero_caso: 17578, username_ufinal: "cmillan" }
+  - { numero_caso: 16076, username_ufinal: "mtovar" }
+  - { numero_caso: 15435, username_ufinal: "scastillo" }
+  - { numero_caso: 14997, username_ufinal: "bduque" }
+  - { numero_caso: 14006, username_ufinal: "jgomez" }
+  - { numero_caso: 13370, username_ufinal: "lmunoz" }
+  - { numero_caso: 13173, username_ufinal: "mberrio" }
+  - { numero_caso: 10762, username_ufinal: "cmillan" }
+  - { numero_caso: 10119, username_ufinal: "jfarieta" }
+  - { numero_caso: 7569,  username_ufinal: "masmar" }
+  - { numero_caso: 6440,  username_ufinal: "clezaca" }
+  - { numero_caso: 2490,  username_ufinal: "scastillo" }
+  - { numero_caso: 2064,  username_ufinal: "mtovar" }
+  - { numero_caso: 628,   username_ufinal: "mtovar" }
+  - { numero_caso: 104,   username_ufinal: "pvargas" }
+  - { numero_caso: 37,    username_ufinal: "scastillo" }
+  # Bloque 28
+  - { numero_caso: 54482, username_ufinal: "vbarahona" }
+  - { numero_caso: 44338, username_ufinal: "pvargas" }
+  - { numero_caso: 44157, username_ufinal: "agalindo" }
+  - { numero_caso: 9933,  username_ufinal: "brodriguez" }
+  - { numero_caso: 9680,  username_ufinal: "brodriguez" }
+  - { numero_caso: 9629,  username_ufinal: "brodriguez" }
+  - { numero_caso: 9498,  username_ufinal: "brodriguez" }
+  - { numero_caso: 9394,  username_ufinal: "brodriguez" }
+  - { numero_caso: 9263,  username_ufinal: "brodriguez" }
+  - { numero_caso: 8024,  username_ufinal: "brodriguez" }
+  - { numero_caso: 7038,  username_ufinal: "brodriguez" }
+  - { numero_caso: 4850,  username_ufinal: "brodriguez" }
+  - { numero_caso: 4103,  username_ufinal: "brodriguez" }
+  - { numero_caso: 1962,  username_ufinal: "mespinosa" }
+  - { numero_caso: 287,   username_ufinal: "brodriguez" }
+
+# ----------------------------------------------------------------------------
+# por_username_alias — alias de username inconsistente → username canónico.
+# El transformer aplica la regla tanto a username_ufinal como a username_resp.
+# Origen: bloques 36 (15 reglas) + 39 (1 regla nueva: AMRODRIGUEZ).
+# Total: 16 reglas.
+# ----------------------------------------------------------------------------
+por_username_alias:
+  - { from: "CLEZAGA",       to: "clezaca" }
+  - { from: "NIDIA MOLINA",  to: "nmolina" }
+  - { from: "EARCINIEGAS",   to: "earciniega" }
+  - { from: "ELOPEZ",        to: "plopez" }
+  - { from: "IVANBARACALDO", to: "ibaracaldo" }
+  - { from: "JCARDONA",      to: "jacardona" }
+  - { from: "JLEGUIZAMON",   to: "jleguizamo" }
+  - { from: "MARISTIZABAL",  to: "maristizab" }
+  - { from: "MASAMAR",       to: "masmar" }
+  - { from: "MBOCANEGREA",   to: "mbocanegra" }
+  - { from: "MBOLANOS",      to: "mbolano" }
+  # Espacio inicial intencional en el notebook original; se preserva.
+  - { from: " SRODRIGUEZ",   to: "srodriguez" }
+  - { from: "VABARAHONA",    to: "vbarahona" }
+  - { from: "YPORTILLA",     to: "mportilla" }
+  - { from: "VICTORMENDEZ",  to: "victor.mendez" }
+  - { from: "AMRODRIGUEZ",   to: "AMRODRIGUE" }   # bloque 39
+
+# ----------------------------------------------------------------------------
+# nombres_por_username — dado un username (canónico), completar el nombre
+# completo en las columnas de display. Cada regla declara a qué columnas
+# aplica: 'responsable', 'usuariofinal' o ambas.
+# Origen: bloque 39.
+# Total: 4 reglas.
+# ----------------------------------------------------------------------------
+nombres_por_username:
+  - { username: "mportilla",   nombre: "YARLEIDY MARISOL PORTILLA",                aplica_a: ["responsable"] }
+  - { username: "JBETANCOURT", nombre: "JUAN PABLO BETANCOURT",                    aplica_a: ["responsable", "usuariofinal"] }
+  - { username: "OALARCON",    nombre: "OMAR ALARCON",                             aplica_a: ["responsable", "usuariofinal"] }
+  - { username: "AMRODRIGUE",  nombre: "ANDRES MAURICIO RODRIGUEZ GALEANO",        aplica_a: ["responsable"] }
+
+# ----------------------------------------------------------------------------
+# por_responsable — match exacto sobre la columna 'responsable'.
+# Asigna el nombre canónico (si difiere del match) y el username_resp.
+# Si responsable_canonico es igual al match, basta con dejar el campo
+# en blanco o repetirlo; aquí se repite para que el YAML sea explícito.
+# Origen: bloques 89 (14), 95 Especialistas (6), 110 (1).
+# Total: 21 reglas.
+# ----------------------------------------------------------------------------
+por_responsable:
+  # Bloque 89 — actualización dual responsable + username_resp
+  - { match: "Victor Alfonso Diaz León",       responsable_canonico: "Victor Alonso Diaz Leon",          username_resp: "vdiaz" }
+  - { match: "Angie Viviana Roncancio Pinzon", responsable_canonico: "Angie Viviana Roncancio Pinzon",   username_resp: "angie_roncancio" }
+  - { match: "Eduardo Guerra",                 responsable_canonico: "Eduardo A. Guerra Rivera",         username_resp: "eduardo_guerra" }
+  - { match: "Erik Esneider Vasquez Patino",   responsable_canonico: "Erik Esneider Vasquez Patino",     username_resp: "erik_patino" }
+  - { match: "Fabián Aleán",                   responsable_canonico: "Fabian Javier Alean Peña",         username_resp: "fabian_alean" }
+  - { match: "José Raúl Pulido Tique",         responsable_canonico: "Jose R. Pulido Tique",             username_resp: "jose_pulido" }
+  - { match: "Libardo Castillo",               responsable_canonico: "Libardo Castillo Marin",           username_resp: "libardo_castillo" }
+  - { match: "Marisol Nieto",                  responsable_canonico: "Marisol Nieto Gutierrez",          username_resp: "marisol_nieto" }
+  - { match: "Mauricio Dominguez",             responsable_canonico: "Daniel Mauricio Dominguez",        username_resp: "daniel_dominguez" }
+  - { match: "Mendoza Avendaño Harold Adolfo", responsable_canonico: "Harold Adolfo Mendoza Avendaño",   username_resp: "hamendoza" }
+  - { match: "Orlando Bolanos",                responsable_canonico: "Orlando Bolanos",                  username_resp: "orlando_bolanos" }
+  - { match: "Ortiz Pantoja Ricardo Francisco", responsable_canonico: "Ricardo Francisco Ortiz Pantoja", username_resp: "rfortiz" }
+  - { match: "Parra Dávila",                   responsable_canonico: "Lady Lorena Davila Parra",         username_resp: "lady_davila" }
+  - { match: "Victor Alfonso Ruiz Garcia",     responsable_canonico: "Victor Alfonso Ruiz Garcia",       username_resp: "victor_ruiz" }
+  # Bloque 95 — Especialistas (sobre datos ya normalizados a minúsculas)
+  - { match: "alexander holguin lopez",                  responsable_canonico: "alexander holguin lopez",                  username_resp: "alexander_holguin" }
+  - { match: "fabian javier alean pena",                 responsable_canonico: "fabian javier alean pena",                 username_resp: "fjpena", validacion_pendiente: true }  # vs bloque 89 → fabian_alean
+  - { match: "harold adolfo mendoza avendano",           responsable_canonico: "harold adolfo mendoza avendano",           username_resp: "hamendoza" }
+  - { match: "luis francisco gonzalez jimenez",          responsable_canonico: "luis francisco gonzalez jimenez",          username_resp: "lgonzalez" }
+  - { match: "yarleidy marisol portilla huerfano",       responsable_canonico: "yarleidy marisol portilla huerfano",       username_resp: "mportilla" }
+  - { match: "yesid alejandro martinez nunez",           responsable_canonico: "yesid alejandro martinez nunez",           username_resp: "yamartinez" }
+  # Bloque 110 — geus1
+  - { match: "Angela María Pardo Ramirez",     responsable_canonico: "Angela María Pardo Ramirez",       username_resp: "apardo" }
+
+# ----------------------------------------------------------------------------
+# por_usuariofinal — match exacto sobre la columna 'usuariofinal'.
+# Asigna el nombre canónico y el username_ufinal.
+# Origen: bloques 86, 88, 95 (Usuarios), 110, 115 (Usuarios), 136
+#         consolidados, eliminando contradicciones del bloque 86.
+# Total: 33 reglas.
+# ----------------------------------------------------------------------------
+por_usuariofinal:
+  # Bloque 86 — única regla conservada (las otras 3 fueron sobrescritas
+  # más adelante; sus valores canónicos viven abajo con validacion_pendiente)
+  - { match: "Rafael Escorcia Nestor",         usuariofinal_canonico: "Rafael Escorcia Nestor",          username_ufinal: "nrescorcia" }
+
+  # Bloque 88 — actualización dual usuariofinal + username_ufinal
+  - { match: "Luis Francisco Muñoz Ortiz",     usuariofinal_canonico: "Luis Francisco Muñoz",            username_ufinal: "lmunoz" }
+  - { match: "Angiee Lorena Martinez Hormanza", usuariofinal_canonico: "Angiee Lorena Martinez Hormanza", username_ufinal: "anlomartinez" }
+  - { match: "Astrid Alicia Gutiérrez Perez",  usuariofinal_canonico: "Astrid Gutierrez",                username_ufinal: "agutierrez" }
+  - { match: "Augusto Tovar Cesar",            usuariofinal_canonico: "Cesar Augusto Tovar",             username_ufinal: "ctovar" }
+  - { match: "Eduardo Guerra",                 usuariofinal_canonico: "Eduardo A. Guerra Rivera",        username_ufinal: "eduardo_guerra" }
+  - { match: "Ivette Liliana Rios Polanía",    usuariofinal_canonico: "Ivette Rios Polania",             username_ufinal: "irios" }
+  - { match: "Jenny Maryeth Borbon López",     usuariofinal_canonico: "Jenny Borbon",                    username_ufinal: "jborbon" }
+  # Corrige bug del bloque 88: el notebook asignaba 'Jenny Borbon' a Maryluz por copy-paste.
+  - { match: "Maryluz Cortes Olarte",          usuariofinal_canonico: "Maryluz Cortes Olarte",           username_ufinal: "molarte" }
+  - { match: "Mauricio Dominguez",             usuariofinal_canonico: "Daniel Mauricio Dominguez",       username_ufinal: "daniel_dominguez" }
+  - { match: "Nubia Isabel de la Parra Carrasco", usuariofinal_canonico: "Nubia Isabel DeLaParra Carrasco", username_ufinal: "nparra" }
+  - { match: "Omar Dario Yepes Cardona",       usuariofinal_canonico: "Omar Dario Yepes Cardona",        username_ufinal: "omar_yepes" }
+  - { match: "Parra Dávila",                   usuariofinal_canonico: "Lady Lorena Davila Parra",        username_ufinal: "lady_davila" }
+  - { match: "Victor Alfonso Diaz León",       usuariofinal_canonico: "Victor Alonso Diaz Leon",         username_ufinal: "vdiaz" }
+
+  # Bloque 95 — Usuarios (sobre datos normalizados a minúsculas)
+  - { match: "alexander holguin lopez",        usuariofinal_canonico: "alexander holguin lopez",         username_ufinal: "alexander_holguin" }
+  - { match: "andres francisco posada martinez", usuariofinal_canonico: "andres francisco posada martinez", username_ufinal: "aposada" }
+  - { match: "angiee lorena martinez hormanza", usuariofinal_canonico: "angiee lorena martinez hormanza", username_ufinal: "anlomartinez" }
+  - { match: "camilo estrada pelaez",          usuariofinal_canonico: "camilo estrada pelaez",           username_ufinal: "cestrada" }
+  - { match: "elkin fabian franco betancur",   usuariofinal_canonico: "elkin fabian franco betancur",    username_ufinal: "efranco" }
+  - { match: "esperanza torres valderrama",    usuariofinal_canonico: "esperanza torres valderrama",     username_ufinal: "etorres" }
+  - { match: "hugo chaparro moreno",           usuariofinal_canonico: "hugo chaparro moreno",            username_ufinal: "hchaparro" }
+  - { match: "jonathan garcia rojas",          usuariofinal_canonico: "jonathan garcia rojas",           username_ufinal: "jonathan_garcia" }
+  - { match: "luis francisco gonzalez jimenez", usuariofinal_canonico: "luis francisco gonzalez jimenez", username_ufinal: "lgonzalez" }
+  - { match: "orlando bolanos",                usuariofinal_canonico: "orlando bolanos",                 username_ufinal: "orlando_bolanos", validacion_pendiente: true }  # vs bloque 86 → obolanos
+  - { match: "rafael escorcia nestor",         usuariofinal_canonico: "nestor rafael escorcia",          username_ufinal: "nrescorcia" }
+  - { match: "romero rodriguez andrei",        usuariofinal_canonico: "andrei romero rodriguez",         username_ufinal: "aromeror", validacion_pendiente: true }          # vs bloque 86 → aromero
+  - { match: "ruby esperanza gutierrez portela", usuariofinal_canonico: "ruby esperanza gutierrez portela", username_ufinal: "rgutierrez" }
+
+  # Bloque 110 — geus1 (capitalizado)
+  - { match: "Angela María Pardo Ramirez",     usuariofinal_canonico: "Angela María Pardo Ramirez",      username_ufinal: "apardo" }
+
+  # Bloque 115 — geus1 Usuarios (variantes lowercase ausentes en bloque 95)
+  - { match: "angela maria pardo ramirez",     usuariofinal_canonico: "angela maria pardo ramirez",      username_ufinal: "apardo" }
+  - { match: "jenny maryeth borbon lopez",     usuariofinal_canonico: "jenny maryeth borbon lopez",      username_ufinal: "jborbon" }
+  - { match: "luis francisco munoz ortiz",     usuariofinal_canonico: "luis francisco munoz ortiz",      username_ufinal: "lmunoz" }
+  - { match: "victor alfonso diaz leon",       usuariofinal_canonico: "victor alfonso diaz leon",        username_ufinal: "vdiaz" }
+
+  # Bloque 136 — indicadores1 (entradas que no aparecen ya en bloque 95)
+  - { match: "sonia esmeralda villarreal espana", usuariofinal_canonico: "sonia esmeralda villarreal espana", username_ufinal: "sonia_villareal", validacion_pendiente: true }  # vs bloque 86 → sespana

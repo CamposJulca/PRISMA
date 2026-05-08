@@ -1,0 +1,44 @@
+# ============================================================================
+# PRISMA-GTI — settings.yaml
+# ----------------------------------------------------------------------------
+# Versión:           1.0
+# Fecha generación:  2026-05-08
+# Origen:            docs/arquitectura.md §5 + .env.example
+# Validación:        Fabián (rutas operacionales y fechas referenciales)
+# ============================================================================
+# Configuración operacional del pipeline. Las claves de este archivo se
+# mapean uno-a-uno con las dataclasses de src/prisma_gti/core/config.py.
+# Para overrides locales por entorno usar variables del .env.
+# ============================================================================
+
+paths:
+  raw_dir:      ./data/raw
+  interim_dir:  ./data/interim
+  output_dir:   ./data/output
+  config_dir:   ./config
+  log_dir:      ./logs
+
+batch_sizes:
+  # Tamaño de chunk para búsquedas LDAP batch con filtro OR.
+  # Validado en Fase 2 (script 05_ldap_batch.py): 47x speedup vs conexión
+  # nueva por iteración. Refrendado por LDAP_BATCH_SIZE en .env.
+  ldap_batch: 200
+
+# Fechas de corte referenciales.
+# IMPORTANTE: NO se usan como filtros activos en consultas SQL en esta
+# versión. La carga incremental fue descartada en Fase 2 — ver
+# docs/fase2_profiling.md §5.4. Sirven solo como metadata informativa
+# para reportes y validación de cobertura del histórico.
+cutoff_dates:
+  historical_start: 2014-01-01   # primer caso histórico en indicators1.xlsx
+  asms_start:       2025-03-01   # inicio del histórico en provisionalASMS.xlsx
+  tareas_start:     2026-02-01   # inicio del histórico en tareas1.xlsx
+
+catalogs:
+  catalogo_servicios:   ./config/catalogo_servicios.yaml
+  excepciones_usuarios: ./config/excepciones_usuarios.yaml
+
+# Modo debug: si true, conserva archivos intermedios en data/interim
+# y baja el nivel de logging a DEBUG. Puede sobrescribirse desde la
+# variable de entorno DEBUG.
+debug: false
