@@ -33,7 +33,7 @@ _DEFAULT_FORMAT = (
 
 
 def configure_logging(
-    config_path: Path | None,
+    config_path: Path | None = None,
     level: str = "INFO",
     log_file: Path | None = None,
 ) -> None:
