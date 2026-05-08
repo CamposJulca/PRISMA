@@ -86,3 +86,6 @@ logs/
 *.prof
 *.lprof
 profile_results/
+# normalized data (igual que raw/interim/output: nunca al repo)
+data/normalized/*
+!data/normalized/.gitkeep
