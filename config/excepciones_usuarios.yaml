@@ -226,3 +226,32 @@ por_usuariofinal:
 
   # Bloque 136 — indicadores1 (entradas que no aparecen ya en bloque 95)
   - { match: "sonia esmeralda villarreal espana", usuariofinal_canonico: "sonia esmeralda villarreal espana", username_ufinal: "sonia_villareal", validacion_pendiente: true }  # vs bloque 86 → sespana
+
+# ----------------------------------------------------------------------------
+# patrones_especiales — sustituciones literales sobre 'username_ufinal'
+# cuando el sistema escribió un valor que NO es un username (típicamente
+# por un error del cliente que envió la IP del equipo en lugar del login
+# de red). Aplican como pasada previa al resto de overrides, con match
+# case-sensitive contra el valor crudo.
+# Origen: bloque 17 del notebook legacy.
+# Total: 1 regla.
+# ----------------------------------------------------------------------------
+patrones_especiales:
+  - { match: "172.16.9.85", username_ufinal: "masmar" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Hallazgo empírico — sesión 5 (11 de mayo 2026):
+#
+# Las 43 cédulas únicas que aparecen en Discovery se resuelven así:
+#   - 38 (88.4%) desde Kactus
+#   -  5 (11.6%) residuales: NO se encuentran en LDAP/AD tampoco
+#
+# Las 5 cédulas residuales quedan como 'unresolved' (~22 filas de
+# Discovery con identidad parcial). Probablemente corresponden a
+# ex-empleados, terceros sin cuenta corporativa, o registros AD con
+# employeeID no poblado. El notebook legacy tampoco las resuelve,
+# por lo tanto hay paridad funcional.
+#
+# Pendiente: validar con Fabián la lista de las 5 cédulas residuales
+# cuando se haga la revisión funcional del cierre de Fase 3.
+# ─────────────────────────────────────────────────────────────────────────────
