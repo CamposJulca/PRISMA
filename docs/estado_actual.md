@@ -1,7 +1,7 @@
 # Estado Actual del Proyecto PRISMA-GTI
 
 **Última actualización:** 13 de mayo de 2026
-**Fase actual:** 3 — Refactor a CLI modular (~92% completado)
+**Fase actual:** 3 — Refactor a CLI modular (~75% completado)
 **Servidor:** 172.16.0.98 — usuario `ilab` — `/home/ilab/PRISMA/prisma-gti`
 **Repositorio:** https://github.com/CamposJulca/PRISMA.git
 
@@ -21,11 +21,12 @@ dashboard de Power BI del área DOT.
 - `transformers/` — normalización, catálogo, métricas de tiempo
 - `writers/` — Excel y Parquet
 - `pipelines/historico.py` — genera `indicators1.xlsx`
-- `pipelines/stefanini.py` — genera `provisionalASMS.xlsx` y `tareas1.xlsx`
+
 - `scripts/compare_outputs.py` — validación de paridad
 
 ### Capas pendientes
 
+- `pipelines/stefanini.py` — generará `provisionalASMS.xlsx` y `tareas1.xlsx`
 - `pipelines/ml_models.py` — regresiones polinómica y logística
 - `cli.py` — comando único `prisma run-all`
 - `tests/` — suite de tests unitarios
@@ -85,8 +86,8 @@ correctamente en los datos.
 2. Investigación profunda sobre las 90 filas de Camilo Estrada en GLPI.
 3. Análisis del log "overrides=0" — confirmado que es métrica
    engañosa, no bug real.
-4. Implementación de `pipelines/stefanini.py` y `StefaniniPipeline`
-   actualizando `pipelines/__init__.py`.
+4. Plan funcional de pipelines/stefanini.py acordado con Codex
+   (decisiones documentadas), pero archivo aún no implementado.
 
 ---
 
