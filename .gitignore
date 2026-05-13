@@ -14,9 +14,11 @@
 data/raw/*
 data/interim/*
 data/output/*
+data/reference/*
 !data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/output/.gitkeep
+!data/reference/.gitkeep
 
 # Notebooks legacy (referencia local mientras se hace el refactor)
 legacy/
