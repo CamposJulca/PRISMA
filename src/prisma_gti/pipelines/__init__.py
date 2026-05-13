@@ -13,14 +13,19 @@ Pipelines disponibles:
   de IncidentesStefanini + RequerimientosStefanini + CambiosStefanini) y
   ``tareas1.xlsx`` (desde ``Tareas.csv``). Replica el flujo del notebook
   ``Indicadores2026.ipynb``.
-
-El pipeline de ML (``ml_models.py``) se implementará en una sesión
-posterior.
+- :class:`MLPipeline` — genera ``indicadoresPeriodo.xlsx``,
+  ``indicadoresPeriodo2026.xlsx`` e ``indicadoresMX.xlsx`` a partir
+  de ``indicators1.xlsx``. Entrena las regresiones polinómica y
+  logística (cells 186-220 de ``ProyectoFinal3.ipynb``).
 """
 
 from prisma_gti.pipelines.historico import (
     HistoricoPipeline,
     HistoricoPipelineResult,
+)
+from prisma_gti.pipelines.ml_models import (
+    MLPipeline,
+    MLPipelineResult,
 )
 from prisma_gti.pipelines.stefanini import (
     StefaniniPipeline,
@@ -30,6 +35,8 @@ from prisma_gti.pipelines.stefanini import (
 __all__ = [
     "HistoricoPipeline",
     "HistoricoPipelineResult",
+    "MLPipeline",
+    "MLPipelineResult",
     "StefaniniPipeline",
     "StefaniniPipelineResult",
 ]
