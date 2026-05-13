@@ -9,17 +9,27 @@ Pipelines disponibles:
 - :class:`HistoricoPipeline` — genera ``indicators1.xlsx`` consolidando
   Discovery + Aranda (3 SP) + GLPI + GEUS + ASMS. Replica el flujo
   end-to-end del notebook ``ProyectoFinal3.ipynb``.
+- :class:`StefaniniPipeline` — genera ``provisionalASMS.xlsx`` (consolidado
+  de IncidentesStefanini + RequerimientosStefanini + CambiosStefanini) y
+  ``tareas1.xlsx`` (desde ``Tareas.csv``). Replica el flujo del notebook
+  ``Indicadores2026.ipynb``.
 
-Los pipelines de Stefanini (``stefanini.py``) y ML (``ml_models.py``)
-se implementarán en sesiones posteriores.
+El pipeline de ML (``ml_models.py``) se implementará en una sesión
+posterior.
 """
 
 from prisma_gti.pipelines.historico import (
     HistoricoPipeline,
     HistoricoPipelineResult,
 )
+from prisma_gti.pipelines.stefanini import (
+    StefaniniPipeline,
+    StefaniniPipelineResult,
+)
 
 __all__ = [
     "HistoricoPipeline",
     "HistoricoPipelineResult",
+    "StefaniniPipeline",
+    "StefaniniPipelineResult",
 ]
