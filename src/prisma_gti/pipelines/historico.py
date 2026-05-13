@@ -74,6 +74,7 @@ from prisma_gti.transformers import (
     fix_responsable_casing,
     get_indicators1_schema,
     load_service_catalog,
+    normalize_column,
     normalize_cumple_ans,
     parse_date_column,
     parse_glpi_duration_string,
@@ -132,13 +133,23 @@ def _normalize_key(value: str) -> str:
 
 
 def _invert_normalized(forward: dict[str, str]) -> dict[str, str]:
-    """Construye el dict inverso normalizando la **value** del forward.
+    """Construye el dict inverso solo con ``.strip().lower()`` en la value.
 
-    El forward es ``{username: nombre}``; el inverso es
-    ``{normalize(nombre): username}``. Si dos nombres normalizan al
-    mismo string, gana el último (comportamiento de dict-comprehension).
+    Crítico para paridad con el legacy: el notebook construye
+    ``dic_especialistas_invertido = {str(v).strip().lower(): str(k).strip().lower()}``
+    **sin aplicar unidecode**. Por lo tanto las claves preservan tildes
+    (e.g., ``"harold adolfo mendoza avendaño"`` con ñ). El consumidor
+    GLPI bloque 93 lowercasea ``responsable`` también con tildes
+    preservadas, y el map matchea.
+
+    Si aquí aplicáramos unidecode (como hacían versiones previas de
+    PRISMA), las claves perderían las tildes y el map fallaría → ~850
+    rows con ``username_resp`` en NaN.
     """
-    return {_normalize_key(v): _normalize_key(k) for k, v in forward.items()}
+    return {
+        str(v).strip().lower(): str(k).strip().lower()
+        for k, v in forward.items()
+    }
 
 
 def _extract_last_responsable(series: pd.Series) -> pd.Series:
@@ -520,19 +531,25 @@ class HistoricoPipeline:
         # Manual overrides (incluye numero_caso, alias, patrones especiales).
         df = resolver.apply_manual_overrides(df)
 
-        # Forward map desde especialistas.csv: username_resp → responsable.
-        # Solo donde responsable sigue faltando tras Kactus.
-        df = self._fill_from_forward_dict(
-            df,
-            source_col="username_resp",
-            target_col="responsable",
-            mapping=infra["dic_especialistas_fwd"],
+        # Cells 47-48: sobrescritura UNCONDITIONAL de responsable y
+        # usuariofinal desde los diccionarios de identidad. El legacy
+        # hace ``df["responsable"] = df["username_resp"].map(dict)``,
+        # lo que produce NaN para usernames no presentes en el dict.
+        # Replicamos ese comportamiento para paridad estricta — el
+        # `_fill_from_forward_dict` (fill-only-if-NaN) que teníamos
+        # antes preservaba nombres largos de Kactus que el legacy
+        # descartaba en favor del nombre corto del dict.
+        df["responsable"] = (
+            df["username_resp"]
+            .astype(str)
+            .map(_normalize_key)
+            .map(infra["dic_especialistas_fwd"])
         )
-        df = self._fill_from_forward_dict(
-            df,
-            source_col="username_ufinal",
-            target_col="usuariofinal",
-            mapping=infra["dic_usuarios_fwd"],
+        df["usuariofinal"] = (
+            df["username_ufinal"]
+            .astype(str)
+            .map(_normalize_key)
+            .map(infra["dic_usuarios_fwd"])
         )
 
         df["origen_caso"] = df["origen_caso"].fillna("Discovery")
@@ -654,6 +671,15 @@ class HistoricoPipeline:
             infra["dic_usuarios_inv"]
         ).fillna(df["username_ufinal"])
 
+        # Bloque 95: segunda pasada de manual_overrides sobre los
+        # valores ya lowercased. El legacy aplica reglas hardcoded
+        # post-bloque 90 (e.g., 'alexander holguin lopez' → username
+        # 'alexander_holguin'); en nuestro YAML estas reglas están en
+        # por_responsable / por_usuariofinal con keys lowercased. La
+        # primera pasada (antes del bloque 90) no las dispara porque
+        # los valores aún estaban en Title Case.
+        df = resolver.apply_manual_overrides(df)
+
         # Bloque 98: normalizar tipo_de_caso.
         df["tipo_de_caso"] = df["tipo_de_caso"].replace(
             {"INCIDENCIA": "Incidente", "REQUERIMIENTO": "Requerimiento"}
@@ -717,6 +743,15 @@ class HistoricoPipeline:
         df["username_ufinal"] = df["usuariofinal"].map(
             infra["dic_usuarios_inv"]
         ).fillna(df["username_ufinal"])
+
+        # Bloque 115: segunda pasada de manual_overrides sobre los
+        # valores ya lowercased+unidecoded. El legacy aplica reglas
+        # hardcoded del estilo 'yesid alejandro martinez nunez' →
+        # 'yamartinez' (cell 115). En nuestro YAML estas reglas están
+        # con keys lowercased+unidecoded. La primera pasada (antes del
+        # bloque 111) no las dispara porque los valores aún tenían
+        # tildes y casing original.
+        df = resolver.apply_manual_overrides(df)
 
         return df
 
@@ -892,6 +927,63 @@ class HistoricoPipeline:
         # Bloque 42: fix casing de responsable.
         consolidated = fix_responsable_casing(consolidated)
 
+        # Bloques 133-145: normalización per-fuente. El legacy aplica
+        # estas transformaciones sobre 'indicadores1/2' (Discovery +
+        # Aranda + GLPI + GEUS) ANTES de concatenar con ASMS (cell 180).
+        # Las filas ASMS se mantienen tal cual las emitió Stefanini.
+        # Replicamos esa semántica con una máscara por origen_caso.
+        non_asms = consolidated["origen_caso"] != "Aranda ASMS"
+
+        # Cell 133: title-case usuariofinal+responsable, lower usernames.
+        consolidated.loc[non_asms, "usuariofinal"] = (
+            consolidated.loc[non_asms, "usuariofinal"].astype(str).str.title()
+        )
+        consolidated.loc[non_asms, "responsable"] = (
+            consolidated.loc[non_asms, "responsable"].astype(str).str.title()
+        )
+        consolidated.loc[non_asms, "username_ufinal"] = (
+            consolidated.loc[non_asms, "username_ufinal"].astype(str).str.lower()
+        )
+        consolidated.loc[non_asms, "username_resp"] = (
+            consolidated.loc[non_asms, "username_resp"].astype(str).str.lower()
+        )
+
+        # Cell 134 del legacy es **dead code en la práctica**: chequea
+        # usuariofinal=='Jenny Borbon' AND username_ufinal=='molarte',
+        # pero cell 93 (anterior, en GLPI) hace
+        # username_ufinal = usuariofinal.map(dic_usuarios_inv), y como
+        # dic_usuarios_inv['jenny borbon'] = 'jborbon', el username_ufinal
+        # se sobrescribe a 'jborbon' antes de que cell 134 corra → el
+        # AND falla y la asignación a 'Mary Luz Olarte Cortes' nunca
+        # ocurre. El legacy entonces preserva el valor 'Jenny Borbon'
+        # heredado del bug del bloque 88. Nuestro YAML
+        # (excepciones_usuarios.yaml) corrige ese bug y emite
+        # 'Maryluz Cortes Olarte'. La divergencia resultante (~91 filas)
+        # es una decisión funcional pendiente de Fabián.
+
+        # Cell 135: normalize (unidecode+strip+lower) las 4 columnas de
+        # identidad sobre el subset non-ASMS.
+        for col in ("responsable", "usuariofinal", "username_ufinal", "username_resp"):
+            consolidated.loc[non_asms, col] = normalize_column(
+                consolidated.loc[non_asms, col]
+            )
+
+        # Cell 135 continuación: map inverso usuariofinal → username_ufinal.
+        # El legacy comenta explícitamente la línea responsable →
+        # username_resp.
+        mapped = consolidated.loc[non_asms, "usuariofinal"].map(
+            infra["dic_usuarios_inv"]
+        )
+        consolidated.loc[mapped.dropna().index, "username_ufinal"] = (
+            mapped.dropna()
+        )
+
+        # Cell 142: usuariofinal pasa de lowercased a Title Case
+        # (estado final del legacy para esta columna en non-ASMS).
+        consolidated.loc[non_asms, "usuariofinal"] = (
+            consolidated.loc[non_asms, "usuariofinal"].astype(str).str.title()
+        )
+
         # Bloque 139: dropna servicio.
         consolidated = consolidated.dropna(subset=["servicio"]).reset_index(
             drop=True
@@ -901,6 +993,18 @@ class HistoricoPipeline:
         consolidated = consolidated.dropna(
             subset=["fecha_atencion", "fecha_solucion"]
         ).reset_index(drop=True)
+
+        # tiempoTranscurrido → int64 con fillna(0). Replica el cast
+        # implícito del legacy: cell 171 castea inc/req/cam a int64
+        # antes del concat; tras concat + dropna el resultado consolidado
+        # del legacy es íntegramente int64. PRISMA preserva floats de
+        # Tareas (cell 162), por lo que truncar aquí cierra la
+        # divergencia. dropna garantiza que no quedan NaN al castear.
+        consolidated["tiempoTranscurrido"] = (
+            pd.to_numeric(consolidated["tiempoTranscurrido"], errors="coerce")
+            .fillna(0)
+            .astype("int64")
+        )
 
         # Re-alinear estrictamente al schema (orden + sin columnas extras).
         consolidated = align_schemas({"final": consolidated}, schema)["final"]
