@@ -14,7 +14,7 @@
 #     ('JBETANCOURT' y 'OALARCON') se excluyeron; el bloque 39 las
 #     trata por una vía distinta (sección nombres_por_username).
 #
-#   - Bloque 88: la regla para "Maryluz Cortes Olarte" del notebook
+#   - Bloque 88: la regla para "Maryluz Olarte" del notebook
 #     contenía un bug (asignaba 'Jenny Borbon' como usuariofinal por
 #     copy-paste de la línea anterior). Aquí se corrige a su nombre.
 #
@@ -164,7 +164,8 @@ por_responsable:
   - { match: "Victor Alfonso Ruiz Garcia",     responsable_canonico: "Victor Alfonso Ruiz Garcia",       username_resp: "victor_ruiz" }
   # Bloque 95 — Especialistas (sobre datos ya normalizados a minúsculas)
   - { match: "alexander holguin lopez",                  responsable_canonico: "alexander holguin lopez",                  username_resp: "alexander_holguin" }
-  - { match: "fabian javier alean pena",                 responsable_canonico: "fabian javier alean pena",                 username_resp: "fjpena", validacion_pendiente: true }  # vs bloque 89 → fabian_alean
+  # Confirmado por Fabián el 12-may-2026: username correcto es fabian_alean. Antes era validacion_pendiente.
+  - { match: "fabian javier alean pena",                 responsable_canonico: "fabian javier alean pena",                 username_resp: "fabian_alean" }
   - { match: "harold adolfo mendoza avendano",           responsable_canonico: "harold adolfo mendoza avendano",           username_resp: "hamendoza" }
   - { match: "luis francisco gonzalez jimenez",          responsable_canonico: "luis francisco gonzalez jimenez",          username_resp: "lgonzalez" }
   - { match: "yarleidy marisol portilla huerfano",       responsable_canonico: "yarleidy marisol portilla huerfano",       username_resp: "mportilla" }
@@ -192,8 +193,8 @@ por_usuariofinal:
   - { match: "Eduardo Guerra",                 usuariofinal_canonico: "Eduardo A. Guerra Rivera",        username_ufinal: "eduardo_guerra" }
   - { match: "Ivette Liliana Rios Polanía",    usuariofinal_canonico: "Ivette Rios Polania",             username_ufinal: "irios" }
   - { match: "Jenny Maryeth Borbon López",     usuariofinal_canonico: "Jenny Borbon",                    username_ufinal: "jborbon" }
-  # Corrige bug del bloque 88: el notebook asignaba 'Jenny Borbon' a Maryluz por copy-paste.
-  - { match: "Maryluz Cortes Olarte",          usuariofinal_canonico: "Maryluz Cortes Olarte",           username_ufinal: "molarte" }
+  # Confirmado por Fabián el 12-may-2026: el nombre canónico es 'Maryluz Olarte', no 'Maryluz Cortes Olarte'. El notebook legacy tenía un bug que la mapeaba como 'Jenny Borbon' (bloque 88).
+  - { match: "Maryluz Cortes Olarte",          usuariofinal_canonico: "Maryluz Olarte",                  username_ufinal: "molarte" }
   - { match: "Mauricio Dominguez",             usuariofinal_canonico: "Daniel Mauricio Dominguez",       username_ufinal: "daniel_dominguez" }
   - { match: "Nubia Isabel de la Parra Carrasco", usuariofinal_canonico: "Nubia Isabel DeLaParra Carrasco", username_ufinal: "nparra" }
   - { match: "Omar Dario Yepes Cardona",       usuariofinal_canonico: "Omar Dario Yepes Cardona",        username_ufinal: "omar_yepes" }
@@ -204,7 +205,8 @@ por_usuariofinal:
   - { match: "alexander holguin lopez",        usuariofinal_canonico: "alexander holguin lopez",         username_ufinal: "alexander_holguin" }
   - { match: "andres francisco posada martinez", usuariofinal_canonico: "andres francisco posada martinez", username_ufinal: "aposada" }
   - { match: "angiee lorena martinez hormanza", usuariofinal_canonico: "angiee lorena martinez hormanza", username_ufinal: "anlomartinez" }
-  - { match: "camilo estrada pelaez",          usuariofinal_canonico: "camilo estrada pelaez",           username_ufinal: "cestrada" }
+  # Confirmado por Fabián el 12-may-2026: la forma corta 'Camilo Estrada' es la canónica, sin el apellido Pelaez.
+  - { match: "camilo estrada pelaez",          usuariofinal_canonico: "camilo estrada",                  username_ufinal: "cestrada" }
   - { match: "elkin fabian franco betancur",   usuariofinal_canonico: "elkin fabian franco betancur",    username_ufinal: "efranco" }
   - { match: "esperanza torres valderrama",    usuariofinal_canonico: "esperanza torres valderrama",     username_ufinal: "etorres" }
   - { match: "hugo chaparro moreno",           usuariofinal_canonico: "hugo chaparro moreno",            username_ufinal: "hchaparro" }
